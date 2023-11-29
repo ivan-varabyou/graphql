@@ -152,18 +152,30 @@ const DirectorType = new GraphQLObjectType({
 const Query = new GraphQLObjectType({
   name: "Query",
   fields: {
-    movies: {
+    movie: {
       type: MoviesType,
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
         return movies.find((movie) => movie.id == args.id);
       },
     },
-    directors: {
+    movies: {
+      type: new GraphQLList(MoviesType),
+      resolve(parent, args) {
+        return movies;
+      },
+    },
+    director: {
       type: DirectorType,
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
         return directors.find((director) => director.id == args.id);
+      },
+    },
+    directors: {
+      type: new GraphQLList(DirectorType),
+      resolve(parent, args) {
+        return directors;
       },
     },
   },
