@@ -6,32 +6,93 @@ const {
   GraphQLSchema,
   GraphQLID,
   GraphQLInt,
+  GraphQLList,
 } = graphql;
 
 const movies = [
   {
-    id: 1,
-    name: "The Shawshank Redemption",
-    genre: "Drama",
-    directorId: 1,
-  },
-  {
     id: 2,
     name: "The Godfather",
     genre: "Crime",
+    directorId: 1,
+  },
+  {
+    id: 3,
+    name: "The Dark Knight",
+    genre: "Action",
     directorId: 2,
   },
   {
-    id: "3",
-    name: "The Dark Knight",
+    id: 7,
+    name: "The Matrix",
     genre: "Action",
+    directorId: 2,
+  },
+  {
+    id: 13,
+    name: "The Dark Knight Rises",
+    genre: "Action",
+    directorId: 2,
+  },
+  {
+    id: 17,
+    name: "Inception",
+    genre: "Sci-Fi",
+    directorId: 2,
+  },
+  {
+    id: 5,
+    name: "The Lord of the Rings: The Fellowship of the Ring",
+    genre: "Fantasy",
+    directorId: 4,
+  },
+  {
+    id: 8,
+    name: "Star Wars: Episode IV - A New Hope",
+    genre: "Sci-Fi",
+    directorId: 4,
+  },
+  {
+    id: 12,
+    name: "The Lord of the Rings: The Two Towers",
+    genre: "Fantasy",
+    directorId: 4,
+  },
+  {
+    id: 15,
+    name: "The Lord of the Rings: The Return of the King",
+    genre: "Fantasy",
+    directorId: 4,
+  },
+  {
+    id: 4,
+    name: "Pulp Fiction",
+    genre: "Crime",
     directorId: 3,
   },
   {
-    id: "4",
-    name: "The Dark Knight New",
-    genre: "Action New",
-    directorId: 4,
+    id: 9,
+    name: "The Silence of the Lambs",
+    genre: "Thriller",
+    directorId: 3,
+  },
+  {
+    id: 14,
+    name: "Goodfellas",
+    genre: "Crime",
+    directorId: 3,
+  },
+  {
+    id: 19,
+    name: "Fight Club",
+    genre: "Drama",
+    directorId: 3,
+  },
+  {
+    id: 20,
+    name: "Interstellar",
+    genre: "Sci-Fi",
+    directorId: 2,
   },
 ];
 
@@ -78,6 +139,12 @@ const DirectorType = new GraphQLObjectType({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
     age: { type: GraphQLInt },
+    movies: {
+      type: new GraphQLList(MoviesType),
+      resolve(parent, args) {
+        return movies.filter((movie) => movie.directorId == parent.id);
+      },
+    },
   }),
 });
 
